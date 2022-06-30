@@ -1,22 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import jsCookie from "js-cookie";
+import Cookies from "js-cookie";
 
 function Header() {
-    let navigation = [];
-    if (!jsCookie.get("token")) {
-        navigation = [
-            { title: "Register", path: "/register" },
-            { title: "Login", path: "/login" },
-        ];
-    } else {
-        navigation = [
-            { title: "Beranda", path: "/home" },
-            { title: "Post Baru", path: "/new-post" },
-            { title: "Post Saya", path: "/my-post" },
-            { title: "Kategori", path: "/category" },
-        ];
-    }
+    const [navigation, setNavigation] = useState([]);
+    let token = Cookies.get("token");
+
+    useEffect(() => {
+        if (!token) {
+            setNavigation([
+                { title: "Register", path: "/register" },
+                { title: "Login", path: "/login" },
+            ]);
+        } else {
+            setNavigation([
+                { title: "Beranda", path: "/home" },
+                { title: "Post Baru", path: "/new-post" },
+                { title: "Post Saya", path: "/my-post" },
+                { title: "Kategori", path: "/category" },
+            ]);
+        }
+    }, [token]);
+
     return (
         <nav className="navbar navbar-expand-lg bg-secondary fixed mb-4">
             <div className="container-fluid">

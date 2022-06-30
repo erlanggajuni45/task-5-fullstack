@@ -114,6 +114,64 @@ export const AuthProvider = (props) => {
         [name, email, password, passwordConfirmation]
     );
 
+    const handleLogin = useCallback((event) => {
+        event.preventDefault();
+        setIsDisabled(true);
+
+        toast.clearWaitingQueue();
+
+        if (email === "") {
+            errors.push("Email harus diisi");
+        } else if (email !== "" && !pattern.test(email)) {
+            errors.push("Masukkan email dengan benar");
+        }
+
+        if (password === "") {
+            errors.push("Kata sandi harus diisi");
+        } else if (password !== "") {
+            if (password.length < 6) {
+                errors.push("Kata sandi tidak boleh kurang dari 6 karakter");
+            }
+        }
+
+        if (errors.length === 0) {
+            axios
+                .post(`${base_url}/login`, {
+                    email: email,
+                    password: password,
+                })
+                .then((res) => {
+                    let data = res.data;
+                    Notification({
+                        type: "success",
+                        text: "Berhasil Login",
+                    });
+                    Cookies.set("token", data.token);
+                    Cookies.set("user", JSON.stringify(data.user));
+
+                    setInput({
+                        email: "",
+                        password: "",
+                    });
+                    navigate("/user");
+                })
+                .catch((err) => {
+                    console.log(err.response.data.message);
+                    // Notification({
+                    //     type: "error",
+                    //     text: "Email sudah digunakan, coba email yang lain",
+                    // });
+                });
+        }
+
+        errors.map((error) => {
+            return Notification({ type: "error", text: error });
+        });
+
+        errors = [];
+        setTimeout(() => setIsDisabled(false), 3000);
+    });
+
     const state = {
         isDisabled,
         input,
@@ -121,6 +179,7 @@ export const AuthProvider = (props) => {
     const handleFunction = {
         handleChange,
         handleRegister,
+        handleLogin,
     };
 
     return (

@@ -5,6 +5,7 @@ import Example from "./components/Example";
 import Header from "./components/Header";
 import User from "./components/User";
 import { AuthProvider } from "./Context/AuthContext";
+import Login from "./Page/Login";
 import Register from "./Page/Register";
 
 function RootApp() {
@@ -18,7 +19,7 @@ function RootApp() {
             </Routes>
             <AuthProvider>
                 <Routes>
-                    <Route path="/user" element={<User />} />
+                    <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                 </Routes>
             </AuthProvider>
