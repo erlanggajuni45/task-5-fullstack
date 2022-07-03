@@ -31,7 +31,7 @@ export const ArticleProvider = (props) => {
     let dataUser;
     let tokenUser;
     if (Cookies.get("token")) {
-        dataUser = JSON.stringify(Cookies.get("user"));
+        dataUser = JSON.parse(Cookies.get("user"));
         tokenUser = Cookies.get("token");
     } else {
         <Navigate to="/login" replace />;
@@ -91,15 +91,15 @@ export const ArticleProvider = (props) => {
             if (errors.length === 0) {
                 axios
                     .post(
-                        `${base_url}/article`,
+                        `${base_url}/articles`,
                         {
                             title: title,
                             content: content,
                             image: image,
-                            user_id: dataUser.id,
-                            category_id: category,
+                            user_id: parseInt(dataUser.id),
+                            category_id: parseInt(category),
                         },
-                        { headers: { Authorization: "Bearer: " + tokenUser } }
+                        { headers: { Authorization: "Bearer " + tokenUser } }
                     )
                     .then((res) => {
                         setDataArticle([...dataArticle, res]);
@@ -117,7 +117,7 @@ export const ArticleProvider = (props) => {
                         navigate("/home");
                     })
                     .catch((err) => {
-                        console.log(err);
+                        console.log(err.response);
                         Notification({
                             type: "error",
                             text: "Gagal, coba lagi",

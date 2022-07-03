@@ -5368,7 +5368,7 @@ var ArticleProvider = function ArticleProvider(props) {
   var tokenUser;
 
   if (js_cookie__WEBPACK_IMPORTED_MODULE_3__["default"].get("token")) {
-    dataUser = JSON.stringify(js_cookie__WEBPACK_IMPORTED_MODULE_3__["default"].get("user"));
+    dataUser = JSON.parse(js_cookie__WEBPACK_IMPORTED_MODULE_3__["default"].get("user"));
     tokenUser = js_cookie__WEBPACK_IMPORTED_MODULE_3__["default"].get("token");
   } else {
     /*#__PURE__*/
@@ -5483,15 +5483,15 @@ var ArticleProvider = function ArticleProvider(props) {
     }
 
     if (errors.length === 0) {
-      axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(base_url, "/article"), {
+      axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(base_url, "/articles"), {
         title: title,
         content: content,
         image: image,
-        user_id: dataUser.id,
-        category_id: category
+        user_id: parseInt(dataUser.id),
+        category_id: parseInt(category)
       }, {
         headers: {
-          Authorization: "Bearer: " + tokenUser
+          Authorization: "Bearer " + tokenUser
         }
       }).then(function (res) {
         setDataArticle([].concat(_toConsumableArray(dataArticle), [res]));
@@ -5508,7 +5508,7 @@ var ArticleProvider = function ArticleProvider(props) {
         });
         navigate("/home");
       })["catch"](function (err) {
-        console.log(err);
+        console.log(err.response);
         (0,_components_Notification__WEBPACK_IMPORTED_MODULE_2__.Notification)({
           type: "error",
           text: "Gagal, coba lagi"
