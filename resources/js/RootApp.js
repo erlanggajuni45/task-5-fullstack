@@ -3,8 +3,10 @@ import ReactDOM from "react-dom";
 import { Routes, BrowserRouter, Route } from "react-router-dom";
 import Example from "./components/Example";
 import Header from "./components/Header";
-import User from "./components/User";
+import { ArticleProvider } from "./Context/ArticleContext";
 import { AuthProvider } from "./Context/AuthContext";
+import FormArticle from "./Page/FormArticle";
+import Home from "./Page/Home";
 import Login from "./Page/Login";
 import Register from "./Page/Register";
 
@@ -18,10 +20,14 @@ function RootApp() {
                     <Route path="/register" element={<Register />} />
                 </Routes>
             </AuthProvider>
-            <Routes>
-                <Route path="/" element={<Example />} />
-                <Route path="/user" element={<User />} />
-            </Routes>
+
+            <ArticleProvider>
+                <Routes>
+                    <Route path="/" element={<Example />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/new-post" element={<FormArticle />} />
+                </Routes>
+            </ArticleProvider>
         </BrowserRouter>
     );
 }

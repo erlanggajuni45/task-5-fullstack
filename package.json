@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "js-cookie": "^3.0.1",
+        "moment": "^2.29.3",
         "react-router-dom": "^6.3.0",
         "react-toastify": "^9.0.5"
     }

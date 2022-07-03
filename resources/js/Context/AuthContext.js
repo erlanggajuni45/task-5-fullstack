@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import React, { createContext, useCallback, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { Notification } from "../components/Notification";
 import { useNavigate } from "react-router-dom";
@@ -89,7 +89,7 @@ export const AuthProvider = (props) => {
                             password: "",
                             passwordConfirmation: "",
                         });
-                        navigate("/articles");
+                        navigate("/home");
                     })
                     .catch((err) => {
                         if (err.response.data.errors.email) {
@@ -157,7 +157,7 @@ export const AuthProvider = (props) => {
                         email: "",
                         password: "",
                     });
-                    navigate("/articles");
+                    navigate("/home");
                 })
                 .catch((err) => {
                     let message = err.response.data.message;
