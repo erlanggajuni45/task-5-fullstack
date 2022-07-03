@@ -32,6 +32,7 @@ Route::delete('/category/{id}', [CategoryController::class, 'destroy']);
 // Route Authenticated
 Route::group(['middleware' => ['auth:api']], function() {
     Route::get('/articles', [ArticleController::class, 'index']);
+    Route::get('/my-articles/{id}', [ArticleController::class, 'myArticle']);
     Route::post('/articles', [ArticleController::class, 'store']);
     Route::get('/articles/{id}', [ArticleController::class, 'show']);
     Route::put('/articles/{id}', [ArticleController::class, 'update']);

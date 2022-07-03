@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Article;
 
@@ -15,9 +16,21 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return Article::paginate(5);
+        return DB::table('articles')
+                ->join('categories', 'articles.category_id', '=', 'categories.id')
+                ->orderBy('articles.created_at')
+                ->select('articles.*', 'categories.name')
+                ->paginate(5);
     }
 
+    public function myArticle($id)
+    {
+        return DB::table('articles')
+                ->join('categories', 'articles.category_id', '=', 'categories.id')
+                ->where('articles.user_id', $id)
+                ->select('articles.*', 'categories.name')
+                ->paginate(5);
+    }
     /**
      * Store a newly created resource in storage.
      *

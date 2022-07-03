@@ -12,17 +12,16 @@ function RootApp() {
     return (
         <BrowserRouter>
             <Header />
-            <Routes>
-                <Route path="/" element={<Example />} />
-                {/* <Route path="/user" element={<User />} />
-                    <Route path="/register" element={<Register />} /> */}
-            </Routes>
             <AuthProvider>
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                 </Routes>
             </AuthProvider>
+            <Routes>
+                <Route path="/" element={<Example />} />
+                <Route path="/user" element={<User />} />
+            </Routes>
         </BrowserRouter>
     );
 }

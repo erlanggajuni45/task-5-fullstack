@@ -78,8 +78,10 @@ export const AuthProvider = (props) => {
                             type: "success",
                             text: "Berhasil Registrasi",
                         });
-                        Cookies.set("token", data.token);
-                        Cookies.set("user", JSON.stringify(data.user));
+                        Cookies.set("token", data.token, { expires: 1 });
+                        Cookies.set("user", JSON.stringify(data.user), {
+                            expires: 1,
+                        });
 
                         setInput({
                             name: "",
@@ -87,7 +89,7 @@ export const AuthProvider = (props) => {
                             password: "",
                             passwordConfirmation: "",
                         });
-                        navigate("/user");
+                        navigate("/articles");
                     })
                     .catch((err) => {
                         if (err.response.data.errors.email) {
@@ -146,21 +148,23 @@ export const AuthProvider = (props) => {
                         type: "success",
                         text: "Berhasil Login",
                     });
-                    Cookies.set("token", data.token);
-                    Cookies.set("user", JSON.stringify(data.user));
+                    Cookies.set("token", data.token, { expires: 1 });
+                    Cookies.set("user", JSON.stringify(data.user), {
+                        expires: 1,
+                    });
 
                     setInput({
                         email: "",
                         password: "",
                     });
-                    navigate("/user");
+                    navigate("/articles");
                 })
                 .catch((err) => {
-                    console.log(err.response.data.message);
-                    // Notification({
-                    //     type: "error",
-                    //     text: "Email sudah digunakan, coba email yang lain",
-                    // });
+                    let message = err.response.data.message;
+                    Notification({
+                        type: "error",
+                        text: message,
+                    });
                 });
         }
 

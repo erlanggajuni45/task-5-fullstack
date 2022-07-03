@@ -5377,15 +5377,19 @@ var AuthProvider = function AuthProvider(props) {
           type: "success",
           text: "Berhasil Registrasi"
         });
-        js_cookie__WEBPACK_IMPORTED_MODULE_4__["default"].set("token", data.token);
-        js_cookie__WEBPACK_IMPORTED_MODULE_4__["default"].set("user", JSON.stringify(data.user));
+        js_cookie__WEBPACK_IMPORTED_MODULE_4__["default"].set("token", data.token, {
+          expires: 1
+        });
+        js_cookie__WEBPACK_IMPORTED_MODULE_4__["default"].set("user", JSON.stringify(data.user), {
+          expires: 1
+        });
         setInput({
           name: "",
           email: "",
           password: "",
           passwordConfirmation: ""
         });
-        navigate("/user");
+        navigate("/articles");
       })["catch"](function (err) {
         if (err.response.data.errors.email) {
           (0,_components_Notification__WEBPACK_IMPORTED_MODULE_2__.Notification)({
@@ -5441,18 +5445,23 @@ var AuthProvider = function AuthProvider(props) {
           type: "success",
           text: "Berhasil Login"
         });
-        js_cookie__WEBPACK_IMPORTED_MODULE_4__["default"].set("token", data.token);
-        js_cookie__WEBPACK_IMPORTED_MODULE_4__["default"].set("user", JSON.stringify(data.user));
+        js_cookie__WEBPACK_IMPORTED_MODULE_4__["default"].set("token", data.token, {
+          expires: 1
+        });
+        js_cookie__WEBPACK_IMPORTED_MODULE_4__["default"].set("user", JSON.stringify(data.user), {
+          expires: 1
+        });
         setInput({
           email: "",
           password: ""
         });
-        navigate("/user");
+        navigate("/articles");
       })["catch"](function (err) {
-        console.log(err.response.data.message); // Notification({
-        //     type: "error",
-        //     text: "Email sudah digunakan, coba email yang lain",
-        // });
+        var message = err.response.data.message;
+        (0,_components_Notification__WEBPACK_IMPORTED_MODULE_2__.Notification)({
+          type: "error",
+          text: message
+        });
       });
     }
 
@@ -5737,12 +5746,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function RootApp() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.BrowserRouter, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_Header__WEBPACK_IMPORTED_MODULE_3__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Routes, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-        path: "/",
-        element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_Example__WEBPACK_IMPORTED_MODULE_2__["default"], {})
-      })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Context_AuthContext__WEBPACK_IMPORTED_MODULE_5__.AuthProvider, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_Header__WEBPACK_IMPORTED_MODULE_3__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Context_AuthContext__WEBPACK_IMPORTED_MODULE_5__.AuthProvider, {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Routes, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
           path: "/login",
@@ -5752,6 +5756,14 @@ function RootApp() {
           element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Page_Register__WEBPACK_IMPORTED_MODULE_7__["default"], {})
         })]
       })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Routes, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+        path: "/",
+        element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_Example__WEBPACK_IMPORTED_MODULE_2__["default"], {})
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+        path: "/user",
+        element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_User__WEBPACK_IMPORTED_MODULE_4__["default"], {})
+      })]
     })]
   });
 }
